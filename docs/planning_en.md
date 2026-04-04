@@ -70,10 +70,10 @@ Result Screen
 ### Phase 0 — Setup *(current)*
 - [x] Define project name: **HireMate**
 - [x] Create GitHub repository
-- [ ] Scaffold Next.js frontend (`/frontend`)
-- [ ] Scaffold FastAPI backend (`/backend`)
-- [ ] Set up Vercel (frontend) + Railway (backend)
-- [ ] Confirm frontend ↔ backend connection works
+- [x] Scaffold Next.js frontend (`/frontend`)
+- [x] Scaffold FastAPI backend (`/backend`)
+- [x] Set up Vercel (frontend) + Railway (backend)
+- [x] Confirm frontend ↔ backend connection works
 
 ### Phase 1 — MVP
 *Goal: Complete interview loop works end to end*

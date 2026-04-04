@@ -64,10 +64,10 @@ AI 기반 인터뷰 연습 웹 앱입니다.
 ### Phase 0 — 설정 *(현재)*
 - [x] 프로젝트 이름 정의: **HireMate**
 - [x] GitHub 리포지토리 생성
-- [ ] Next.js 프론트엔드 스캐폴드 (`/frontend`)
-- [ ] FastAPI 백엔드 스캐폴드 (`/backend`)
-- [ ] Vercel (프론트엔드) + Railway (백엔드) 설정
-- [ ] 프론트엔드 ↔ 백엔드 연결 확인
+- [x] Next.js 프론트엔드 스캐폴드 (`/frontend`)
+- [x] FastAPI 백엔드 스캐폴드 (`/backend`)
+- [x] Vercel (프론트엔드) + Railway (백엔드) 설정
+- [x] 프론트엔드 ↔ 백엔드 연결 확인
 
 ### Phase 1 — MVP
 *목표: 인터뷰 루프가 끝에서 끝까지 작동*
