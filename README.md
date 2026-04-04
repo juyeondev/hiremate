@@ -24,7 +24,7 @@ Users enter a job title, select an interviewer persona, answer questions by voic
 ## 📁 Planned Project Structure
 
 ```
-ai-interview-app/
+hiremate/
 ├── frontend/                  # Next.js app
 │   ├── app/
 │   │   ├── page.tsx           # Lobby
@@ -51,3 +51,16 @@ ai-interview-app/
 │
 └── README.md
 ```
+
+---
+
+## 💰 Cost Management
+
+| Item | Strategy |
+|---|---|
+| GPT API | Use `gpt-4o-mini`, fix 5 questions/session, short system prompts |
+| Hosting | Vercel free tier (frontend), Railway free tier (backend) |
+| Voice | Web Speech API — completely free, browser-native |
+| Design tools | Figma free tier |
+
+**Estimated monthly cost:** Under ₩5,000 for light personal use.
