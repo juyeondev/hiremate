@@ -14,31 +14,29 @@ Users enter a job title, answer AI-generated questions by voice, and receive a s
 
 ### MVP Screens
 
-| Screen | Description |
-|---|---|
-| Lobby | Landing page with app name, short description, and Start button |
-| Job Input Modal | Text field to enter job title (e.g. "Frontend Developer"), Confirm button |
-| Character Select | Choose one interviewer character (1 character available in MVP, more added later) |
-| Interview Screen | AI asks 5 questions one by one via speech bubble, user answers by voice |
-| Result Screen | Total score, full conversation history (chat-style), two buttons: "Try Again" and "Get Feedback" |
-| Feedback Screen | Detailed AI feedback for the full session, "Go Home" button |
+| Route | Screen | Description |
+|---|---|---|
+| `/` | Home | Landing page with app name, short description, and Start button |
+| `/lobby` | Lobby | Job title input (modal) + character select on same page |
+| `/interview-room` | Interview Room | AI asks 5 questions one by one via speech bubble, user answers by voice |
+| `/scorecard` | Scorecard | Total score, full conversation history (chat-style), "Try Again" and "Get Feedback" buttons |
+| `/feedback` | Feedback | Detailed AI feedback for the full session, "Go Home" button |
 
 ### MVP Screen Flow
 
 ```
-Lobby
+/ (Home)
   ↓ (Start)
-Job Input Modal
-  ↓ (Confirm)
-Character Select  ← UI ready for multiple characters, only 1 available in MVP
-  ↓ (Select)
-Interview Screen
+/lobby
+  ↓ Job input modal → Confirm
+  ↓ Character select → Select
+/interview-room  ← character and job title passed via state
   ↓ (After 5 questions)
-Result Screen
-  ├── [Try Again] → Lobby
-  └── [Get Feedback] → Feedback Screen  ← API call happens here
+/scorecard
+  ├── [Try Again] → / (Home)
+  └── [Get Feedback] → /feedback  ← API call happens here
                             ↓
-                        [Go Home] → Lobby
+                        [Go Home] → / (Home)
 ```
 
 ### MVP Features
@@ -67,7 +65,7 @@ Result Screen
 
 ## Phase Plan
 
-### Phase 0 — Setup *(current)*
+### Phase 0 — Setup *(complete)*
 - [x] Define project name: **HireMate**
 - [x] Create GitHub repository
 - [x] Scaffold Next.js frontend (`/frontend`)
@@ -75,17 +73,16 @@ Result Screen
 - [x] Set up Vercel (frontend) + Railway (backend)
 - [x] Confirm frontend ↔ backend connection works
 
-### Phase 1 — MVP
+### Phase 1 — MVP *(current)*
 *Goal: Complete interview loop works end to end*
 
 **Frontend**
-- [ ] Lobby screen (app name + Start button)
-- [ ] Job Input Modal (text input + Confirm)
-- [ ] Character Select screen (grid layout, 1 character in MVP)
-- [ ] Interview screen (speech bubble + voice recorder)
+- [ ] Home screen (`/`) — app name, description, Start button
+- [ ] Lobby screen (`/lobby`) — job input modal + character select (1 animal character in MVP)
+- [ ] Interview Room (`/interview-room`) — speech bubble + voice recorder
 - [ ] Web Speech API integration (voice → text)
-- [ ] Result screen (score + chat-style conversation history + "Try Again" / "Get Feedback" buttons)
-- [ ] Feedback screen (detailed AI feedback + "Go Home" button)
+- [ ] Scorecard (`/scorecard`) — score + chat-style conversation history + "Try Again" / "Get Feedback" buttons
+- [ ] Feedback screen (`/feedback`) — detailed AI feedback + "Go Home" button
 - [ ] Session state management (in-memory, no DB)
 
 **Backend**
@@ -162,3 +159,6 @@ Persona candidates:
 | Phase 0 | 1 character in MVP, more in Phase 3 | Avoids blocking MVP on illustration work |
 | Phase 0 | gpt-4o-mini | Cost-efficient, sufficient quality for MVP |
 | Phase 0 | Vercel + Railway | Free tier, GitHub auto-deploy, beginner-friendly |
+| Phase 1 | Animal-based characters with cute design | Portfolio appeal, distinct visual identity |
+| Phase 1 | Themed route names (`/lobby`, `/interview-room`, `/scorecard`) | Matches app's personality; kebab-case for URL convention |
+| Phase 1 | Home (`/`) is landing-only; Lobby (`/lobby`) handles job input + character select | Cleaner separation — home is stateless, lobby owns session setup |

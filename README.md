@@ -27,13 +27,18 @@ Users enter a job title, select an interviewer persona, answer questions by voic
 hiremate/
 ├── frontend/                  # Next.js app
 │   ├── app/
-│   │   ├── page.tsx           # Lobby
-│   │   ├── interview/
-│   │   │   └── page.tsx       # Interview screen
-│   │   └── result/
-│   │       └── page.tsx       # Result screen
+│   │   ├── page.tsx               # Home — landing page, Start button
+│   │   ├── lobby/
+│   │   │   └── page.tsx           # Lobby — job input modal + character select
+│   │   ├── interview-room/
+│   │   │   └── page.tsx           # Interview — 5 voice questions
+│   │   ├── scorecard/
+│   │   │   └── page.tsx           # Scorecard — results + conversation history
+│   │   └── feedback/
+│   │       └── page.tsx           # Feedback — detailed AI feedback
 │   ├── components/
 │   │   ├── JobInputModal.tsx
+│   │   ├── CharacterSelect.tsx
 │   │   ├── SpeechBubble.tsx
 │   │   ├── VoiceRecorder.tsx
 │   │   └── ScoreCard.tsx
