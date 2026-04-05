@@ -33,6 +33,8 @@ export default function Lobby() {
                 onChange={(e) => setJobTitle(e.target.value)}
                 placeholder="Job Title"
             />
+
+            {/* TODO: If user put invalid job title, show an error message */}
             <button onClick={() => setStep('characterSelect')} disabled={isButtonDisabled}>
                 Next
             </button>
@@ -53,6 +55,7 @@ export default function Lobby() {
 
         {step === 'readyToInterview' && (
             <div>
+                {/* TODO: Allow other characters than Alex */}
                 <button onClick={() => router.push(`/interview-room?jobTitle=${encodeURIComponent(jobTitle)}&character=Alex`)}>{"Let's go!"}</button>
             </div>
         )}

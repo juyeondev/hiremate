@@ -1,4 +1,6 @@
 # TODO: Split PROMPTS and set_prompt into different files
+# TODO: File name, directory should be more general?
+
 PROMPTS = {
     "alex" : """You are Alex, a professional job interviewer.
         Your personality is calm, polite, and supportive, but also focused and detail-oriented.
