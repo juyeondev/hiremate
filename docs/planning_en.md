@@ -77,9 +77,9 @@ Users enter a job title, answer AI-generated questions by voice, and receive a s
 *Goal: Complete interview loop works end to end*
 
 **Frontend**
-- [ ] Home screen (`/`) — app name, description, Start button
-- [ ] Lobby screen (`/lobby`) — job input modal + character select (1 animal character in MVP)
-- [ ] Interview Room (`/interview-room`) — speech bubble + voice recorder
+- [x] Home screen (`/`) — app name, description, Start button, info modal
+- [x] Lobby screen (`/lobby`) — job input (step-based flow) + character select + navigate to interview-room with query params
+- [ ] Interview Room (`/interview-room`) — speech bubble + voice recorder *(in progress — params received)*
 - [ ] Web Speech API integration (voice → text)
 - [ ] Scorecard (`/scorecard`) — score + chat-style conversation history + "Try Again" / "Get Feedback" buttons
 - [ ] Feedback screen (`/feedback`) — detailed AI feedback + "Go Home" button
