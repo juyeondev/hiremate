@@ -47,7 +47,7 @@ export default function Lobby() {
             }}>
                 Alex
             </button>
-            <p>This interviewer is known for asking technical questions and assessing problem-solving skills.</p>
+            <p>He is calm, polite, and supportive, but also focused and detail-oriented.</p>
             </div>
         )}
 

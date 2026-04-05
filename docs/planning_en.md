@@ -79,18 +79,19 @@ Users enter a job title, answer AI-generated questions by voice, and receive a s
 **Frontend**
 - [x] Home screen (`/`) — app name, description, Start button, info modal
 - [x] Lobby screen (`/lobby`) — job input (step-based flow) + character select + navigate to interview-room with query params
-- [ ] Interview Room (`/interview-room`) — speech bubble + voice recorder *(in progress — params received)*
-- [ ] Web Speech API integration (voice → text)
+- [x] Interview Room (`/interview-room`) — fetches questions from backend, displays all questions *(voice loop next)*
+- [ ] Web Speech API integration (voice → text) — **next: one question at a time, capture answer, move to next**
 - [ ] Scorecard (`/scorecard`) — score + chat-style conversation history + "Try Again" / "Get Feedback" buttons
 - [ ] Feedback screen (`/feedback`) — detailed AI feedback + "Go Home" button
 - [ ] Session state management (in-memory, no DB)
 
 **Backend**
-- [ ] API : generate 5 questions from job title
+- [x] API : generate 7 questions from job title (5 AI + 2 fixed) — `POST /generate_questions/`
+- [x] OpenAI `gpt-4o-mini` integration
+- [x] `.env` based API key management
+- [x] Character prompt system (`backend/prompt/characters.py`)
 - [ ] API : evaluate one answer, return score + comment
 - [ ] API : generate overall feedback for full session
-- [ ] OpenAI `gpt-4o-mini` integration
-- [ ] `.env` based API key management
 
 **Done when:** A user can go Lobby → Job Input → Interview (5 questions) → Result → Retry, entirely by voice.
 

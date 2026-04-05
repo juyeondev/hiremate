@@ -69,3 +69,18 @@ hiremate/
 | Design tools | Figma free tier |
 
 **Estimated monthly cost:** Under ₩5,000 for light personal use.
+
+---
+
+### Frontend (`/frontend`)
+```bash
+npm run dev      # Start dev server (port 3000)
+npm run build    # Production build
+npm run lint     # Run ESLint
+```
+
+### Backend (`/backend`)
+```bash
+uvicorn main:app --reload        # Start dev server (port 8000)
+pip install -r requirements.txt  # Install dependencies
+```
