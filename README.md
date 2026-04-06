@@ -32,8 +32,8 @@ hiremate/
 │   │   │   └── page.tsx           # Lobby — job input modal + character select
 │   │   ├── interview-room/
 │   │   │   └── page.tsx           # Interview — 5 voice questions
-│   │   ├── scorecard/
-│   │   │   └── page.tsx           # Scorecard — results + conversation history
+│   │   ├── result-room/
+│   │   │   └── page.tsx           # result-room — results + conversation history
 │   │   └── feedback/
 │   │       └── page.tsx           # Feedback — detailed AI feedback
 │   ├── components/
@@ -41,7 +41,6 @@ hiremate/
 │   │   ├── CharacterSelect.tsx
 │   │   ├── SpeechBubble.tsx
 │   │   ├── VoiceRecorder.tsx
-│   │   └── ScoreCard.tsx
 │   └── lib/
 │       └── api.ts             # API call helpers
 │
