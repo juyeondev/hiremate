@@ -36,7 +36,8 @@ export default function ResultRoom() {
             .then((json) => {
                 setScoreResult(json);
                 setIsLoading(false);
-            });
+            })
+            .catch(() => setIsLoading(false));
     }, []);
 
     if (isLoading) return <div>Scoring your interview...</div>;

@@ -31,7 +31,8 @@ export default function Feedback() {
             .then((json) => {
                 setFeedBackResult(json);
                 setIsLoading(false);
-            });
+            })
+            .catch(() => setIsLoading(false));
     }, []);
     
     return (
