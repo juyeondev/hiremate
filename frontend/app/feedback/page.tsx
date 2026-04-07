@@ -3,55 +3,61 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface FeedBackResult {
-    question: string;
-    answer: string;
-    feedback: string;
+  question: string;
+  answer: string;
+  feedback: string;
 }
 
 export default function Feedback() {
-    const router = useRouter();
-    // TODO: use zod for runtime validation and type inference instead of manual casting
-    // TODO: null check feedBackResult before rendering
-    const [feedBackResult, setFeedBackResult] = useState<FeedBackResult[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [jobTitle, setJobTitle] = useState('');
+  const router = useRouter();
+  // TODO: use zod for runtime validation and type inference instead of manual casting
+  // TODO: null check feedBackResult before rendering
+  const [feedBackResult, setFeedBackResult] = useState<FeedBackResult[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [jobTitle, setJobTitle] = useState('');
 
-    useEffect(() => {
-        const session = JSON.parse(sessionStorage.getItem('interviewSession') || '{}');
-        const title: string = session.jobTitle || '';
-        const interviewData = session.interviewData || [];
-        setJobTitle(title);
+  useEffect(() => {
+    const session = JSON.parse(sessionStorage.getItem('interviewSession') || '{}');
+    const title: string = session.jobTitle || '';
+    const interviewData = session.interviewData || [];
+    setJobTitle(title);
 
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ job_title: title, interview_data: interviewData }),
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                setFeedBackResult(json);
-                setIsLoading(false);
-            })
-            .catch(() => setIsLoading(false));
-    }, []);
-    
-    return (
-        <div>
-            <h1>Feedback Page</h1>
-            <p>Job Title: {jobTitle}</p>
-            {isLoading ? (
-                <p>Loading feedback...</p>
-            ) : (
-                feedBackResult.map((item, index) => (
-                    <div key={index}>
-                        <p><strong>Q:</strong> {item.question}</p>
-                        <p><strong>A:</strong> {item.answer}</p>
-                        <p><strong>Feedback:</strong> {item.feedback}</p>
-                        <hr />
-                    </div>
-                ))
-            )}
-            <button onClick={() => router.push('/')}>Restart Interview</button>
-        </div>
-    );
-}  
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ job_title: title, interview_data: interviewData }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setFeedBackResult(json);
+        setIsLoading(false);
+      })
+      .catch(() => setIsLoading(false));
+  }, []);
+
+  return (
+    <div>
+      <h1>Feedback Page</h1>
+      <p>Job Title: {jobTitle}</p>
+      {isLoading ? (
+        <p>Loading feedback...</p>
+      ) : (
+        feedBackResult.map((item, index) => (
+          <div key={index}>
+            <p>
+              <strong>Q:</strong> {item.question}
+            </p>
+            <p>
+              <strong>A:</strong> {item.answer}
+            </p>
+            <p>
+              <strong>Feedback:</strong> {item.feedback}
+            </p>
+            <hr />
+          </div>
+        ))
+      )}
+      <button onClick={() => router.push('/')}>Restart Interview</button>
+    </div>
+  );
+}

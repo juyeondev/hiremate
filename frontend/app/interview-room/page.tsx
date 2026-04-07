@@ -33,7 +33,7 @@ function InterviewRoomInner() {
 
   function startListening() {
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    
+
     recognition.lang = 'en-US';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
@@ -48,10 +48,9 @@ function InterviewRoomInner() {
       console.error('Speech recognition error:', event);
       setIsListening(false);
     };
-    
+
     recognition.start();
     setIsListening(true);
-
   }
 
   const handleNext = () => {
@@ -63,7 +62,10 @@ function InterviewRoomInner() {
       setTranscript('');
       setCurrentIndex(currentIndex + 1);
     } else {
-      const interviewData = questionList.map((q, i) => ({ question: q, answer: newAnswers[i] ?? '' }));
+      const interviewData = questionList.map((q, i) => ({
+        question: q,
+        answer: newAnswers[i] ?? '',
+      }));
       sessionStorage.setItem('interviewSession', JSON.stringify({ jobTitle, interviewData }));
       router.push('/result-room');
     }
@@ -74,19 +76,28 @@ function InterviewRoomInner() {
   return (
     <div>
       <h1>Interview Room</h1>
-      <p>Question {currentIndex + 1} / {questionList.length}</p>
+      <p>
+        Question {currentIndex + 1} / {questionList.length}
+      </p>
       <p>{questionList[currentIndex]}</p>
 
-      {!transcript && (                                                                                       
-        <button onClick={startListening} disabled={isListening}>                                              
-          {isListening ? 'Listening...' : 'Start Speaking'}                                                   
-        </button>                                                                                             
+      {!transcript && (
+        <button onClick={startListening} disabled={isListening}>
+          {isListening ? 'Listening...' : 'Start Speaking'}
+        </button>
       )}
 
       {transcript && (
         <div>
           <p>You said: {transcript}</p>
-          <button onClick={() => { setTranscript(''); startListening(); }}>Re-answer</button>
+          <button
+            onClick={() => {
+              setTranscript('');
+              startListening();
+            }}
+          >
+            Re-answer
+          </button>
           <button onClick={handleNext}>Next</button>
         </div>
       )}
