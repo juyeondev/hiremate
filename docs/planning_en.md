@@ -95,7 +95,7 @@ Users enter a job title, answer AI-generated questions by voice, and receive a s
 - [x] Regex JSON cleaning for GPT markdown-wrapped responses
 
 **Notes for next session:**
-- Several TODOs left in code: zod validation (result-room, feedback), proper error handling on fetch failures, null check on feedBackResult
+- Several TODOs left in code: zod validation (result-room, feedback), proper error handling on fetch failures, null check on feedBackResult, adding ruff and lint (import, quotations, delete spacing)
 - UI is unstyled (plain HTML) — Phase 2 is Figma design before any styling
 - `POST /feedback/` endpoint is at `/feedback/` (not `/get_feedback/`)
 - Session resets on page refresh by design (sessionStorage)
