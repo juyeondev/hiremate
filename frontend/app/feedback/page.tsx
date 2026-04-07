@@ -10,21 +10,22 @@ interface FeedBackResult {
 
 export default function Feedback() {
     const router = useRouter();
-    // TODO: use zod for runtime validation and type inference instead of manual casting 
-    const session = JSON.parse(sessionStorage.getItem('interviewSession') || '{}');                         
-    const jobTitle: string = session.jobTitle || '';                                                        
-    const interviewData = session.interviewData || [];  
-    
+    // TODO: use zod for runtime validation and type inference instead of manual casting
     // TODO: null check feedBackResult before rendering
     const [feedBackResult, setFeedBackResult] = useState<FeedBackResult[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const [jobTitle, setJobTitle] = useState('');
 
     useEffect(() => {
+        const session = JSON.parse(sessionStorage.getItem('interviewSession') || '{}');
+        const title: string = session.jobTitle || '';
+        const interviewData = session.interviewData || [];
+        setJobTitle(title);
+
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ job_title: jobTitle, interview_data: interviewData }),
+            body: JSON.stringify({ job_title: title, interview_data: interviewData }),
         })
             .then((response) => response.json())
             .then((json) => {

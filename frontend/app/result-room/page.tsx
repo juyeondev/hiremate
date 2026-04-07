@@ -17,18 +17,20 @@ export default function ResultRoom() {
     const router = useRouter();
 
     // TODO: use zod for runtime validation and type inference instead of manual casting
-    const session = JSON.parse(sessionStorage.getItem('interviewSession') || '{}');
-    const jobTitle: string = session.jobTitle || '';
-    const interviewData: InterviewData[] = session.interviewData || [];
-
+    const [interviewData, setInterviewData] = useState<InterviewData[]>([]);
     const [scoreResult, setScoreResult] = useState<ScoreResult | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        const session = JSON.parse(sessionStorage.getItem('interviewSession') || '{}');
+        const jobTitle: string = session.jobTitle || '';
+        const data: InterviewData[] = session.interviewData || [];
+        setInterviewData(data);
+
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/score_answer/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ job_title: jobTitle, interview_data: interviewData }),
+            body: JSON.stringify({ job_title: jobTitle, interview_data: data }),
         })
             .then((response) => response.json())
             .then((json) => {
