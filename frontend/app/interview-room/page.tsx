@@ -1,12 +1,10 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
-
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
-export default function InterviewRoom() {
+function InterviewRoomInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -93,5 +91,13 @@ export default function InterviewRoom() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function InterviewRoom() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <InterviewRoomInner />
+    </Suspense>
   );
 }
