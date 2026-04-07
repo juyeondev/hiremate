@@ -13,7 +13,10 @@ from prompts.service import get_prompt
 
 load_dotenv()
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000") 
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+print(f"[startup] OPENAI_API_KEY set: {OPENAI_API_KEY is not None}")
+print(f"[startup] FRONTEND_URL: {FRONTEND_URL}")
 
 app = FastAPI()
 
@@ -24,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = AsyncOpenAI()  # reads OPENAI_API_KEY from environment automatically
+client = AsyncOpenAI()
 
 
 class QuestionRequest(BaseModel):
@@ -45,6 +48,12 @@ class InterviewData(BaseModel):
 @app.get("/")
 def root():
     return {"message": "HireMate API is running"}
+
+
+@app.get("/debug-env")
+def debug_env():
+    key = os.getenv("OPENAI_API_KEY")
+    return {"key_set": key is not None, "key_prefix": key[:10] if key else None}
 
 
 @app.post("/generate_questions/")
