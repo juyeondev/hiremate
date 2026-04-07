@@ -14,31 +14,29 @@ Users enter a job title, answer AI-generated questions by voice, and receive a s
 
 ### MVP Screens
 
-| Screen | Description |
-|---|---|
-| Lobby | Landing page with app name, short description, and Start button |
-| Job Input Modal | Text field to enter job title (e.g. "Frontend Developer"), Confirm button |
-| Character Select | Choose one interviewer character (1 character available in MVP, more added later) |
-| Interview Screen | AI asks 5 questions one by one via speech bubble, user answers by voice |
-| Result Screen | Total score, full conversation history (chat-style), two buttons: "Try Again" and "Get Feedback" |
-| Feedback Screen | Detailed AI feedback for the full session, "Go Home" button |
+| Route | Screen | Description |
+|---|---|---|
+| `/` | Home | Landing page with app name, short description, and Start button |
+| `/lobby` | Lobby | Job title input (modal) + character select on same page |
+| `/interview-room` | Interview Room | AI asks 5 questions one by one via speech bubble, user answers by voice |
+| `/result-room` | result-room | Total score, full conversation history (chat-style), "Try Again" and "Get Feedback" buttons |
+| `/feedback` | Feedback | Detailed AI feedback for the full session, "Go Home" button |
 
 ### MVP Screen Flow
 
 ```
-Lobby
+/ (Home)
   ↓ (Start)
-Job Input Modal
-  ↓ (Confirm)
-Character Select  ← UI ready for multiple characters, only 1 available in MVP
-  ↓ (Select)
-Interview Screen
+/lobby
+  ↓ Job input modal → Confirm
+  ↓ Character select → Select
+/interview-room  ← character and job title passed via state
   ↓ (After 5 questions)
-Result Screen
-  ├── [Try Again] → Lobby
-  └── [Get Feedback] → Feedback Screen  ← API call happens here
+/result-room
+  ├── [Try Again] → / (Home)
+  └── [Get Feedback] → /feedback  ← API call happens here
                             ↓
-                        [Go Home] → Lobby
+                        [Go Home] → / (Home)
 ```
 
 ### MVP Features
@@ -67,42 +65,82 @@ Result Screen
 
 ## Phase Plan
 
-### Phase 0 — Setup *(current)*
+### Phase 0 — Setup *(complete)*
 - [x] Define project name: **HireMate**
 - [x] Create GitHub repository
-- [ ] Scaffold Next.js frontend (`/frontend`)
-- [ ] Scaffold FastAPI backend (`/backend`)
-- [ ] Set up Vercel (frontend) + Railway (backend)
-- [ ] Confirm frontend ↔ backend connection works
+- [x] Scaffold Next.js frontend (`/frontend`)
+- [x] Scaffold FastAPI backend (`/backend`)
+- [x] Set up Vercel (frontend) + Railway (backend)
+- [x] Confirm frontend ↔ backend connection works
 
-### Phase 1 — MVP
+### Phase 1 — MVP *(complete)*
 *Goal: Complete interview loop works end to end*
 
 **Frontend**
-- [ ] Lobby screen (app name + Start button)
-- [ ] Job Input Modal (text input + Confirm)
-- [ ] Character Select screen (grid layout, 1 character in MVP)
-- [ ] Interview screen (speech bubble + voice recorder)
-- [ ] Web Speech API integration (voice → text)
-- [ ] Result screen (score + chat-style conversation history + "Try Again" / "Get Feedback" buttons)
-- [ ] Feedback screen (detailed AI feedback + "Go Home" button)
-- [ ] Session state management (in-memory, no DB)
+- [x] Home screen (`/`) — app name, description, Start button, info modal
+- [x] Lobby screen (`/lobby`) — job input (step-based flow) + character select + navigate to interview-room with query params
+- [x] Interview Room (`/interview-room`) — one question at a time, voice capture via Web Speech API, saves answers, navigates to result-room
+- [x] Web Speech API integration — `speech.d.ts` declaration merging for TypeScript, `SpeechRecognition` + `webkitSpeechRecognition`
+- [x] result-room (`/result-room`) — score + overall comment + Q&A history + "Restart" / "Get Feedback" buttons
+- [x] Feedback screen (`/feedback`) — per-question detailed AI feedback + "Restart" button
+- [x] Session state via `sessionStorage` (`interviewSession: { jobTitle, interviewData }`) — no URL param passing
 
 **Backend**
-- [ ] API : generate 5 questions from job title
-- [ ] API : evaluate one answer, return score + comment
-- [ ] API : generate overall feedback for full session
-- [ ] OpenAI `gpt-4o-mini` integration
-- [ ] `.env` based API key management
+- [x] `POST /generate_questions/` — 7 questions (5 AI + 2 fixed) from job title + character
+- [x] `POST /score_answer/` — total score (1–100) + overall comment as JSON
+- [x] `POST /feedback/` — per-question feedback array `[{ question, answer, feedback }]`
+- [x] OpenAI `gpt-4o-mini` integration
+- [x] `.env` based API key management
+- [x] Character prompt system (`backend/prompt/characters.py`)
+- [x] Regex JSON cleaning for GPT markdown-wrapped responses
 
-**Done when:** A user can go Lobby → Job Input → Interview (5 questions) → Result → Retry, entirely by voice.
+**Notes for next session:**
+- Several TODOs left in code: zod validation (result-room, feedback), proper error handling on fetch failures, null check on feedBackResult, adding ruff and lint (import, quotations, delete spacing)
+- UI is unstyled (plain HTML) — Phase 2 is Figma design before any styling
+- `POST /feedback/` endpoint is at `/feedback/` (not `/get_feedback/`)
+- Session resets on page refresh by design (sessionStorage)
+
+**Done when:** A user can go Lobby → Job Input → Interview (7 questions) → Result → Feedback, entirely by voice. ✅
 
 ---
 
-### Phase 2 — Design & Polish
-*Goal: Looks good enough to show as a portfolio piece*
+### Phase 2 — Figma Design
+*Goal: Design the full UI/UX in Figma before writing any polish code — lock the design system and layouts first*
 
-- [ ] Design system (colors, typography, spacing) in Tailwind
+**Design System**
+- [ ] Color palette (Primary, Secondary, Neutral, Semantic)
+- [ ] Typography scale (font family, sizes, weights)
+- [ ] Spacing / grid system
+- [ ] Core component library (buttons, inputs, cards, speech bubbles)
+
+**Wireframes (per screen)**
+- [ ] Home (`/`)
+- [ ] Lobby (`/lobby`) — job input modal + character select
+- [ ] Interview Room (`/interview-room`) — speech bubble layout, voice recording UI
+- [ ] result-room (`/result-room`) — chat history, score display
+- [ ] Feedback (`/feedback`)
+
+**Character & Illustration Concepts**
+- [ ] Lobby character concept (SVG, animal-based)
+- [ ] Interviewer character MVP concept (SVG)
+- [ ] Character Select layout (hover state, selection animation)
+
+**Interactions & Animations**
+- [ ] Speech bubble entrance animation (typewriter or fade-in)
+- [ ] Voice recording waveform animation
+- [ ] Screen transition style
+- [ ] Loading state UI
+
+**Responsive**
+- [ ] Mobile layout (375px)
+- [ ] Desktop layout (1280px)
+
+---
+
+### Phase 3 — Design & Polish
+*Goal: Implement the Figma designs in code — looks good enough to show as a portfolio piece*
+
+- [ ] Apply design system in Tailwind (colors, typography, spacing)
 - [ ] Lobby character illustration (SVG, hand-crafted)
 - [ ] MVP interviewer character illustration (SVG, hand-crafted)
 - [ ] Character Select screen polish (hover states, selection animation)
@@ -114,7 +152,7 @@ Result Screen
 
 ---
 
-### Phase 3 — Interviewer Personas
+### Phase 4 — Interviewer Personas
 *Goal: Each character has a distinct interview style and behavior*
 
 - [ ] Add new character illustrations (SVG)
@@ -130,7 +168,7 @@ Persona candidates:
 
 ---
 
-### Phase 4 — Feedback & Export
+### Phase 5 — Feedback & Export
 *Goal: Users can save and review their results*
 
 - [ ] Text input fallback (for users without mic access)
@@ -140,7 +178,7 @@ Persona candidates:
 
 ---
 
-### Phase 5 — Growth Features *(optional / future)*
+### Phase 6 — Growth Features *(optional / future)*
 *Goal: Make it stickier and more useful long-term*
 
 - [ ] User accounts (save session history)
@@ -162,3 +200,6 @@ Persona candidates:
 | Phase 0 | 1 character in MVP, more in Phase 3 | Avoids blocking MVP on illustration work |
 | Phase 0 | gpt-4o-mini | Cost-efficient, sufficient quality for MVP |
 | Phase 0 | Vercel + Railway | Free tier, GitHub auto-deploy, beginner-friendly |
+| Phase 1 | Animal-based characters with cute design | Portfolio appeal, distinct visual identity |
+| Phase 1 | Themed route names (`/lobby`, `/interview-room`, `/result-room`) | Matches app's personality; kebab-case for URL convention |
+| Phase 1 | Home (`/`) is landing-only; Lobby (`/lobby`) handles job input + character select | Cleaner separation — home is stateless, lobby owns session setup |

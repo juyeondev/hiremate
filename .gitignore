@@ -138,6 +138,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# Claude Code
+.claude
+CLAUDE.md
+
 # Python
 __pycache__/
 *.py[cod]

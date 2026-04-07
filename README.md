@@ -27,16 +27,20 @@ Users enter a job title, select an interviewer persona, answer questions by voic
 hiremate/
 ├── frontend/                  # Next.js app
 │   ├── app/
-│   │   ├── page.tsx           # Lobby
-│   │   ├── interview/
-│   │   │   └── page.tsx       # Interview screen
-│   │   └── result/
-│   │       └── page.tsx       # Result screen
+│   │   ├── page.tsx               # Home — landing page, Start button
+│   │   ├── lobby/
+│   │   │   └── page.tsx           # Lobby — job input modal + character select
+│   │   ├── interview-room/
+│   │   │   └── page.tsx           # Interview — 5 voice questions
+│   │   ├── result-room/
+│   │   │   └── page.tsx           # result-room — results + conversation history
+│   │   └── feedback/
+│   │       └── page.tsx           # Feedback — detailed AI feedback
 │   ├── components/
 │   │   ├── JobInputModal.tsx
+│   │   ├── CharacterSelect.tsx
 │   │   ├── SpeechBubble.tsx
 │   │   ├── VoiceRecorder.tsx
-│   │   └── ScoreCard.tsx
 │   └── lib/
 │       └── api.ts             # API call helpers
 │
@@ -64,3 +68,21 @@ hiremate/
 | Design tools | Figma free tier |
 
 **Estimated monthly cost:** Under ₩5,000 for light personal use.
+
+---
+
+### Frontend (`/frontend`)
+```bash
+npm run dev      # Start dev server (port 3000)
+npm run build    # Production build
+npm run lint     # Run ESLint (import sort, quotes)
+npm run format   # Run Prettier (spacing, blank lines, formatting)
+```
+
+### Backend (`/backend`)
+```bash
+uvicorn main:app --reload        # Start dev server (port 8000)
+pip install -r requirements.txt  # Install dependencies
+ruff check --fix main.py         # Lint + auto-fix (import sort, code errors)
+ruff format main.py              # Format (spacing, blank lines)
+```
