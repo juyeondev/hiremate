@@ -24,7 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = AsyncOpenAI()  # reads OPENAI_API_KEY from environment automatically
 
 
 class QuestionRequest(BaseModel):
