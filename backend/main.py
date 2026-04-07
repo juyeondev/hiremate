@@ -9,12 +9,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from openai import AsyncOpenAI
 from pydantic import BaseModel
 
-from prompt.characters import set_prompt
+from prompts.service import get_prompt
 
-app = FastAPI()
 load_dotenv()
 
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000") 
+
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -48,7 +49,7 @@ def root():
 
 @app.post("/generate_questions/")
 async def generate_questions(body: QuestionRequest):
-    prompt = set_prompt(body.character)
+    prompt = get_prompt(body.character)
     response = await client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -70,10 +71,10 @@ async def score_answer(body: InterviewData):
     response = await client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": f"You are an expert interviewer for {body.job_title} position."},
+            {"role": "system", "content": f"You are a strict, professional interviewer for a {body.job_title} position. You evaluate candidates by real hiring standards — most candidates should score between 40–70. Only exceptional answers deserve above 80. Vague, short, or irrelevant answers should score below 30."},
             {
                 "role": "user",
-                "content": f"Here are the interview questions and candidate's answers:\n{interview_text}\n\nScore the candidate's answers on a scale of 1 to 100, and provide a brief feedback overall. Answer it with JSON of total_score and comment.",
+                "content": f"Here are the interview questions and candidate's answers:\n{interview_text}\n\nScore the candidate strictly on a scale of 1 to 100 based on relevance, depth, and clarity. Provide a brief overall comment. Answer with JSON of total_score and comment.",
             },
         ],
     )
