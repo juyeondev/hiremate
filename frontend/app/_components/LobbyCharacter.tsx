@@ -4,13 +4,11 @@ import characterNormal from '@/resources/icons/lobby-character_normal.png';
 import characterSmile from '@/resources/icons/lobby-character_smile.png';
 
 interface LobbyCharacterProps {
-  step: 'greeting1' | 'greeting2' | 'jobInput' | 'characterIntro' | 'characterSelect' | 'readyToInterview';
+  expression: 'normal' | 'smile';
 }
 
-const SMILE_STEPS = ['greeting2', 'jobInput', 'readyToInterview'];
-
-export default function LobbyCharacter({ step }: LobbyCharacterProps) {
-  const src = SMILE_STEPS.includes(step) ? characterSmile : characterNormal;
+export default function LobbyCharacter({ expression }: LobbyCharacterProps) {
+  const src = expression === 'smile' ? characterSmile : characterNormal;
 
   return (
     <div className="mt-auto mb-10 flex justify-center">

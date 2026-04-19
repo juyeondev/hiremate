@@ -1,8 +1,9 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
 import sparkYellow from '@/resources/icons/spark_yellow.png';
+import BadgeLabel from './BadgeLabel';
 import HiremateTitle from './HiremateTitle';
+import PrimaryButton from './PrimaryButton';
 
 interface HelpModalProps {
   onClose: () => void;
@@ -38,31 +39,32 @@ export default function HelpModal({ onClose }: HelpModalProps) {
           <div className="w-full border-t-1 border-dashed border-hm-deep mt-1" />
         </div>
 
-        {/* Badge */}
-        <div className="self-start px-4 py-1.5 bg-hm-deep rounded-full mt-1">
-          <span className="text-white font-bold text-xl">How to practice</span>
-        </div>
+        <BadgeLabel>How to practice</BadgeLabel>
 
         {/* Steps */}
         <div className="flex flex-col pl-3 -mt-2">
-          <p className='text-hm-deep font-bold text-xl'>1. <span className="text-hm-accent">Enter the position</span> you're applying for!</p>
-          <p className='text-hm-deep font-bold text-xl'>2. Answer a few questions with your <span className="text-hm-accent">microphone</span>.</p>
-          <p className='text-hm-deep font-bold text-xl'>3. Check your <span className="text-hm-accent">score</span> and <span className="text-hm-accent">feedback</span> too!</p>
+          <p className="text-hm-deep font-bold text-xl">
+            1. <span className="text-hm-accent">Enter the position</span> you&apos;re applying for!
+          </p>
+          <p className="text-hm-deep font-bold text-xl">
+            2. Answer a few questions with your <span className="text-hm-accent">microphone</span>.
+          </p>
+          <p className="text-hm-deep font-bold text-xl">
+            3. Check your <span className="text-hm-accent">score</span> and{' '}
+            <span className="text-hm-accent">feedback</span> too!
+          </p>
         </div>
 
         {/* Motivational text */}
         <p className="text-hm-deep font-bold text-xl leading-snug mt-4">
-          Practice until you nail it.<br />
+          Practice until you nail it.
+          <br />
           We&apos;re with you until you get your dream job!
         </p>
 
-        {/* Start button */}
-        <Link
-          href="/lobby"
-          className="self-center mt-1 px-10 py-2 bg-gradient-to-b from-[#FFB84D] to-[#F5A000] text-white font-extrabold text-2xl rounded-[10px] hover:brightness-110 transition-all"
-        >
+        <PrimaryButton href="/lobby" className="self-center mt-1">
           Start
-        </Link>
+        </PrimaryButton>
       </div>
     </div>
   );

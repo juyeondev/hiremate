@@ -29,7 +29,10 @@ export default function SpeechBubble({ text, visible, onNext }: SpeechBubbleProp
       className={`transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'} w-full sm:max-w-xs mx-auto rounded-2xl border-[5px] bg-white p-5 relative`}
       style={{ fontFamily: 'var(--font-nunito)', borderColor: 'var(--hm-border)' }}
     >
-      <p className="font-bold text-2xl leading-snug whitespace-pre-line" style={{ color: 'var(--hm-deep)' }}>
+      <p
+        className="font-bold text-2xl leading-snug whitespace-pre-line"
+        style={{ color: 'var(--hm-deep)' }}
+      >
         {displayText}
       </p>
       <button
