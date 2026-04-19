@@ -47,7 +47,6 @@ def root():
     return {"message": "HireMate API is running"}
 
 
-
 @app.post("/generate_questions/")
 async def generate_questions(body: QuestionRequest):
     prompt = get_prompt(body.character)
@@ -72,7 +71,10 @@ async def score_answer(body: InterviewData):
     response = await client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": f"You are a strict, professional interviewer for a {body.job_title} position. You evaluate candidates by real hiring standards — most candidates should score between 40–70. Only exceptional answers deserve above 80. Vague, short, or irrelevant answers should score below 30."},
+            {
+                "role": "system",
+                "content": f"You are a strict, professional interviewer for a {body.job_title} position. You evaluate candidates by real hiring standards — most candidates should score between 40–70. Only exceptional answers deserve above 80. Vague, short, or irrelevant answers should score below 30.",
+            },
             {
                 "role": "user",
                 "content": f"Here are the interview questions and candidate's answers:\n{interview_text}\n\nScore the candidate strictly on a scale of 1 to 100 based on relevance, depth, and clarity. Provide a brief overall comment. Answer with JSON of total_score and comment.",
