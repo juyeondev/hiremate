@@ -11,11 +11,11 @@ interface HelpModalProps {
 export default function HelpModal({ onClose }: HelpModalProps) {
   return (
     <div
-      className="absolute inset-0 flex items-center justify-center px-6"
+      className="absolute inset-0 flex items-center justify-center px-6 bg-black/30 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="relative w-full rounded-[15px] bg-hm-soft p-6 flex flex-col gap-3"
+        className="relative w-full max-w-lg rounded-[15px] bg-hm-soft p-6 flex flex-col gap-3"
         style={{ fontFamily: 'var(--font-nunito)' }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -45,7 +45,7 @@ export default function HelpModal({ onClose }: HelpModalProps) {
 
         {/* Steps */}
         <div className="flex flex-col pl-3 -mt-2">
-          <p className='text-hm-deep font-bold text-xl'>1. <span className="text-hm-accent">Enter the job</span> you're applying for!</p>
+          <p className='text-hm-deep font-bold text-xl'>1. <span className="text-hm-accent">Enter the position</span> you're applying for!</p>
           <p className='text-hm-deep font-bold text-xl'>2. Answer a few questions with your <span className="text-hm-accent">microphone</span>.</p>
           <p className='text-hm-deep font-bold text-xl'>3. Check your <span className="text-hm-accent">score</span> and <span className="text-hm-accent">feedback</span> too!</p>
         </div>
