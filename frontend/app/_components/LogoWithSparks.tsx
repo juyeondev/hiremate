@@ -12,23 +12,23 @@ export default function LogoWithSparks() {
         alt=""
         width={23}
         height={27}
-        className="absolute -bottom-5 -left-23"
+        className="absolute -bottom-5 -left-23 h-auto"
       />
       <Image
         src={sparkPurple}
         alt=""
         width={23}
         height={27}
-        className="absolute -bottom-3 -right-19"
+        className="absolute -bottom-3 -right-19 h-auto"
       />
       <Image
         src={sparkYellow}
         alt=""
         width={15}
         height={18}
-        className="absolute -bottom-6 -right-23"
+        className="absolute -bottom-6 -right-23 h-auto"
       />
-      <Image src={hirematelogo} alt="Hiremate mascot" width={120} height={120} />
+      <Image src={hirematelogo} alt="Hiremate mascot" width={120} height={120} className="h-auto" />
     </div>
   );
 }

@@ -31,9 +31,9 @@ export default function HelpModal({ onClose }: HelpModalProps) {
         {/* Header */}
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-2">
-            <Image src={sparkYellow} alt="" width={20} height={20} />
+            <Image src={sparkYellow} alt="" width={20} height={20} className="h-auto" />
             <HiremateTitle className="h-12 w-auto" />
-            <Image src={sparkYellow} alt="" width={20} height={20} />
+            <Image src={sparkYellow} alt="" width={20} height={20} className="h-auto" />
           </div>
           <p className="text-hm-deep font-bold text-xl mt-0.5">Practice interviews with AI!</p>
           <div className="w-full border-t-1 border-dashed border-hm-deep mt-1" />
