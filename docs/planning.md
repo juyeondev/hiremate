@@ -203,3 +203,4 @@ Persona candidates:
 | Phase 1 | Animal-based characters with cute design | Portfolio appeal, distinct visual identity |
 | Phase 1 | Themed route names (`/lobby`, `/interview-room`, `/result-room`) | Matches app's personality; kebab-case for URL convention |
 | Phase 1 | Home (`/`) is landing-only; Lobby (`/lobby`) handles job input + character select | Cleaner separation — home is stateless, lobby owns session setup |
+| 2026-05-10 | Migrate backend from Railway to Vercel serverless (`frontend/api/`) | Railway trial ended; backend was already stateless so co-locating under one domain (no CORS, free tier) was a clean fit |
