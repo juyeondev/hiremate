@@ -25,7 +25,7 @@ export default function Feedback() {
     const interviewData = session.interviewData || [];
     setJobTitle(title);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback/`, {
+    fetch(`/api/feedback/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ job_title: title, interview_data: interviewData }),
