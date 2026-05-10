@@ -16,7 +16,7 @@ Users enter a job title, select an interviewer persona, answer questions by voic
 | AI | OpenAI GPT API (`gpt-4o-mini`) | Cost-efficient, strong reasoning |
 | Voice Input | Web Speech API | Browser-native, no extra cost |
 | Design | Figma + SVG (hand-crafted) | Full creative control |
-| Hosting | Vercel (frontend) + Railway (backend) | Free tier, GitHub auto-deploy |
+| Hosting | Vercel (frontend + serverless API) | Free tier, GitHub auto-deploy, single domain |
 | Version Control | GitHub | Industry standard |
 
 ---
@@ -44,14 +44,13 @@ hiremate/
 │   └── lib/
 │       └── api.ts             # API call helpers
 │
-├── backend/                   # FastAPI app
-│   ├── main.py
-│   ├── routers/
-│   │   ├── interview.py       # Generate questions
-│   │   └── evaluation.py      # Score answers
-│   ├── services/
-│   │   └── openai_service.py  # GPT API logic
-│   └── requirements.txt
+│   ├── api/                   # FastAPI on Vercel Python serverless
+│   │   ├── index.py           # All endpoints (/api/generate_questions, /api/score_answer, /api/feedback)
+│   │   └── prompts/
+│   │       ├── service.py
+│   │       └── characters.py
+│   ├── requirements.txt       # Python deps for the serverless function
+│   └── vercel.json            # Edge rewrites for /api/*
 │
 └── README.md
 ```
@@ -63,7 +62,7 @@ hiremate/
 | Item | Strategy |
 |---|---|
 | GPT API | Use `gpt-4o-mini`, fix 5 questions/session, short system prompts |
-| Hosting | Vercel free tier (frontend), Railway free tier (backend) |
+| Hosting | Vercel free tier (frontend + serverless API) |
 | Voice | Web Speech API — completely free, browser-native |
 | Design tools | Figma free tier |
 
@@ -79,10 +78,7 @@ npm run lint     # Run ESLint (import sort, quotes)
 npm run format   # Run Prettier (spacing, blank lines, formatting)
 ```
 
-### Backend (`/backend`)
-```bash
-uvicorn main:app --reload        # Start dev server (port 8000)
-pip install -r requirements.txt  # Install dependencies
-ruff check --fix main.py         # Lint + auto-fix (import sort, code errors)
-ruff format main.py              # Format (spacing, blank lines)
-```
+### Backend / API (`/frontend/api`)
+The FastAPI app runs as a Vercel serverless function — no separate dev server needed.
+- Local: `vercel dev` (in `/frontend`) runs Next.js and the Python function on one port
+- Deploy: every push to GitHub auto-deploys via Vercel
