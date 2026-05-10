@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from openai import AsyncOpenAI
 from pydantic import BaseModel
 
@@ -37,7 +37,7 @@ def root():
     return {"message": "HireMate API is running"}
 
 
-@app.post("/api/generate_questions/")
+@app.post("/api/generate_questions")
 async def generate_questions(body: QuestionRequest):
     prompt = get_prompt(body.character)
     response = await client.chat.completions.create(
@@ -55,7 +55,7 @@ async def generate_questions(body: QuestionRequest):
     return question_list
 
 
-@app.post("/api/score_answer/")
+@app.post("/api/score_answer")
 async def score_answer(body: InterviewData):
     interview_text = "\n".join(f"Q: {item.question}\nA: {item.answer}" for item in body.interview_data)
     response = await client.chat.completions.create(
@@ -80,7 +80,7 @@ async def score_answer(body: InterviewData):
         return {"total_score": 0, "comment": "Failed to parse response. Please try again."}
 
 
-@app.post("/api/feedback/")
+@app.post("/api/feedback")
 async def get_feedback(body: InterviewData):
     interview_text = "\n".join(f"Q: {item.question}\nA: {item.answer}" for item in body.interview_data)
     response = await client.chat.completions.create(
@@ -100,14 +100,3 @@ async def get_feedback(body: InterviewData):
         return json.loads(clean)
     except json.JSONDecodeError:
         return [{"question": "", "answer": "", "feedback": "Failed to parse response. Please try again."}]
-
-
-@app.api_route("/{full_path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
-async def debug_catch_all(full_path: str, request: Request):
-    return {
-        "_debug": True,
-        "method": request.method,
-        "scope_path": request.scope.get("path"),
-        "url_path": str(request.url.path),
-        "captured_full_path": full_path,
-    }
