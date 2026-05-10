@@ -1,13 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-
-import Image from 'next/image';
 
 import alexNormal from '@/resources/icons/alex-normal.png';
 import alexSmile from '@/resources/icons/alex-smile.png';
 import microphoneIcon from '@/resources/icons/microphone.png';
+
 import Header from '../_components/Header';
 import QuestionBox from './QuestionBox';
 import { useInterview } from './useInterview';
