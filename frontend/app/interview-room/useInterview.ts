@@ -17,7 +17,7 @@ export function useInterview({ jobTitle, character }: InterviewSession) {
   const [isListening, setIsListening] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/generate_questions/`, {
+    fetch(`/api/generate_questions/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ job_title: jobTitle, character }),

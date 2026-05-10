@@ -29,7 +29,7 @@ export default function ResultRoom() {
     const data: InterviewData[] = session.interviewData || [];
     setInterviewData(data);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/score_answer/`, {
+    fetch(`/api/score_answer/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ job_title: jobTitle, interview_data: data }),
