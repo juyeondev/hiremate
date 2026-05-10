@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import sparkYellow from '@/resources/icons/spark_yellow.png';
+
 import BadgeLabel from './BadgeLabel';
 import HiremateTitle from './HiremateTitle';
 import PrimaryButton from './PrimaryButton';

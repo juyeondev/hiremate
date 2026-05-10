@@ -1,11 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-import Image from 'next/image';
-
 import alexProfile from '@/resources/icons/alex_profile.png';
+
 import BadgeLabel from '../_components/BadgeLabel';
 import Header from '../_components/Header';
 import LobbyCharacter from '../_components/LobbyCharacter';
