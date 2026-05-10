@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from openai import AsyncOpenAI
 from pydantic import BaseModel
 
@@ -100,3 +100,14 @@ async def get_feedback(body: InterviewData):
         return json.loads(clean)
     except json.JSONDecodeError:
         return [{"question": "", "answer": "", "feedback": "Failed to parse response. Please try again."}]
+
+
+@app.api_route("/{full_path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
+async def debug_catch_all(full_path: str, request: Request):
+    return {
+        "_debug": True,
+        "method": request.method,
+        "scope_path": request.scope.get("path"),
+        "url_path": str(request.url.path),
+        "captured_full_path": full_path,
+    }
