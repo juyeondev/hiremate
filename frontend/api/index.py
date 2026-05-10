@@ -1,28 +1,17 @@
-# TODO: Set ruff for formatting
 import json
 import os
 import re
+import sys
 
-from dotenv import load_dotenv
+sys.path.insert(0, os.path.dirname(__file__))
+
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from openai import AsyncOpenAI
 from pydantic import BaseModel
 
 from prompts.service import get_prompt
 
-load_dotenv()
-
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[FRONTEND_URL],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI(redirect_slashes=False)
 
 client = AsyncOpenAI()
 
@@ -42,12 +31,13 @@ class InterviewData(BaseModel):
     interview_data: list[QAItem]
 
 
-@app.get("/")
+@app.get("/api")
+@app.get("/api/")
 def root():
     return {"message": "HireMate API is running"}
 
 
-@app.post("/generate_questions/")
+@app.post("/api/generate_questions")
 async def generate_questions(body: QuestionRequest):
     prompt = get_prompt(body.character)
     response = await client.chat.completions.create(
@@ -65,7 +55,7 @@ async def generate_questions(body: QuestionRequest):
     return question_list
 
 
-@app.post("/score_answer/")
+@app.post("/api/score_answer")
 async def score_answer(body: InterviewData):
     interview_text = "\n".join(f"Q: {item.question}\nA: {item.answer}" for item in body.interview_data)
     response = await client.chat.completions.create(
@@ -90,7 +80,7 @@ async def score_answer(body: InterviewData):
         return {"total_score": 0, "comment": "Failed to parse response. Please try again."}
 
 
-@app.post("/feedback/")
+@app.post("/api/feedback")
 async def get_feedback(body: InterviewData):
     interview_text = "\n".join(f"Q: {item.question}\nA: {item.answer}" for item in body.interview_data)
     response = await client.chat.completions.create(
@@ -109,5 +99,4 @@ async def get_feedback(body: InterviewData):
     try:
         return json.loads(clean)
     except json.JSONDecodeError:
-        # TODO: add proper error handling
         return [{"question": "", "answer": "", "feedback": "Failed to parse response. Please try again."}]
