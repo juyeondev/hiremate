@@ -11,7 +11,7 @@ from pydantic import BaseModel
 
 from prompts.service import get_prompt
 
-app = FastAPI(root_path="/api")
+app = FastAPI(redirect_slashes=False)
 
 client = AsyncOpenAI()
 
@@ -31,12 +31,13 @@ class InterviewData(BaseModel):
     interview_data: list[QAItem]
 
 
-@app.get("/")
+@app.get("/api")
+@app.get("/api/")
 def root():
     return {"message": "HireMate API is running"}
 
 
-@app.post("/generate_questions/")
+@app.post("/api/generate_questions/")
 async def generate_questions(body: QuestionRequest):
     prompt = get_prompt(body.character)
     response = await client.chat.completions.create(
@@ -54,7 +55,7 @@ async def generate_questions(body: QuestionRequest):
     return question_list
 
 
-@app.post("/score_answer/")
+@app.post("/api/score_answer/")
 async def score_answer(body: InterviewData):
     interview_text = "\n".join(f"Q: {item.question}\nA: {item.answer}" for item in body.interview_data)
     response = await client.chat.completions.create(
@@ -79,7 +80,7 @@ async def score_answer(body: InterviewData):
         return {"total_score": 0, "comment": "Failed to parse response. Please try again."}
 
 
-@app.post("/feedback/")
+@app.post("/api/feedback/")
 async def get_feedback(body: InterviewData):
     interview_text = "\n".join(f"Q: {item.question}\nA: {item.answer}" for item in body.interview_data)
     response = await client.chat.completions.create(
